@@ -8,6 +8,7 @@ from utils.image import align_one_face, resize_square_image
 from tqdm import tqdm
 from model.inceptionv3 import AgenderNetInceptionV3
 from model.mobilenetv2 import AgenderNetMobileNetV2
+from model.mobilenetv1 import AgenderNetMobileNetV1
 from model.ssrnet import AgenderSSRNet
 
 parser = argparse.ArgumentParser()
@@ -16,7 +17,7 @@ parser.add_argument('--db_name',
                     help='name of dataset .csv file in data/db/ folder')
 parser.add_argument('--model',
                     required=True,
-                    choices=['mobilenetv2', 'inceptionv3', 'ssrnet'],
+                    choices=['mobilenetv2', 'inceptionv3', 'ssrnet', 'mobilenetv1'],
                     help="model name to be used")
 
 
@@ -34,6 +35,9 @@ def main():
     elif MODEL == 'inceptionv3':
         model = AgenderNetInceptionV3()
         model.load_weights('model/weight/inceptionv3/model.16-3.7887-0.9004-6.6744.h5')
+    elif MODEL == 'mobilenetv1':
+        model = AgenderNetMobileNetV1()
+        #model.load_weights('model/weight/mobilenetv1/___.h5')
     else:
         model = AgenderSSRNet(64, [3, 3, 3], 1.0, 1.0)
         model.load_weights('model/weight/ssrnet/model.37-7.3318-0.8643-7.1952.h5')

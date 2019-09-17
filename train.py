@@ -7,13 +7,14 @@ from keras.callbacks import ModelCheckpoint, CSVLogger
 from sklearn.model_selection import KFold
 from model.inceptionv3 import AgenderNetInceptionV3
 from model.mobilenetv2 import AgenderNetMobileNetV2
+from model.mobilenetv1 import AgenderNetMobileNetV1
 from model.ssrnet import AgenderSSRNet
 from utils.generator import DataGenerator
 from utils.callback import DecayLearningRate
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model',
-                    choices=['inceptionv3', 'ssrnet', 'mobilenetv2'],
+                    choices=['inceptionv3', 'ssrnet', 'mobilenetv2', 'mobilenetv1'],
                     default='mobilenetv2',
                     help='Model to be used')
 parser.add_argument('--epoch',
@@ -102,6 +103,8 @@ def main():
             model = AgenderSSRNet(64, [3, 3, 3], 1.0, 1.0)
         elif MODEL == 'inceptionv3':
             model = AgenderNetInceptionV3()
+        elif MODEL == 'mobilenetv1':
+            model = AgenderNetMobileNetV1()
         else:
             model = AgenderNetMobileNetV2()
         train_db = db[train_idx]
